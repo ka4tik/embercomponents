@@ -4,7 +4,11 @@
     <meta name="description" content="Embercomponents : This repository is a collection of reusable ember components" />
      <link rel="stylesheet" href="components/autocomplete/css/autocomplete.css">
      <link rel="stylesheet" href="components/datatable/css/datatable.css">
-
+     <style>
+         .link:hover{
+             color:blue;
+         }
+     </style>
     <title>Embercomponents</title>
  </head>
 
@@ -40,19 +44,20 @@
              <h3>
                  <a name="components" class="anchor" href="#components"><span class="octicon octicon-link"></span></a>Components</h3>
              {{#link-to 'datatable'}}
-             <h4>
-               <span class="anchor" class="octicon octicon-link"></span>Data-Table</h4>
+             <h4 class="link">
+               <span  class="octicon octicon-link"></span>Data-Table</h4>
              {{/link-to}}
-             <h4>
-
-                 <a name="autocomplete" class="anchor" href="#autocomplete"><span class="octicon octicon-link"></span></a>AutoComplete</h4>
+             {{#link-to 'autocomplete'}}
+             <h4 class="link">
+                <span class="octicon octicon-link"></span>AutoComplete</h4>
+             {{/link-to}}
          </section>
      </div>
 
      <!-- FOOTER  -->
      <div id="footer_wrap" class="outer">
          <footer class="inner">
-             <p class="copyright">Embercomponents maintained by <a href="https://github.com/ka4tik">ka4tik</a></p>
+             <p class="copyright">Embercomponents maintained by <a href="https://github.com/directi">CodeChef</a></p>
              <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
          </footer>
      </div>
@@ -62,6 +67,10 @@
      <div {{bind-attr class=cssClass}}></div>
      <h2 style="text-align:center;">DataTable Demo</h2>
      {{data-table table=this}}
+ </script>
+ <script type="text/x-handlebars" id="autocomplete">
+     <h2>AutoComplete Demo</h2>
+     <span>Auto with data source array:{{auto-complete localdata=data minLength=2}}</span>
  </script>
 <script src="libs/jquery/jquery.js"></script>
 <script src="libs/handlebars/handlebars.js"></script>
