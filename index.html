@@ -2,56 +2,72 @@
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Embercomponents : This repository is a collection of reusable ember components" />
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+     <link rel="stylesheet" href="components/autocomplete/css/autocomplete.css">
+     <link rel="stylesheet" href="components/datatable/css/datatable.css">
 
     <title>Embercomponents</title>
  </head>
 
 <script type="text/x-handlebars">
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-            <a id="forkme_banner" href="https://github.com/ka4tik/embercomponents">View on GitHub</a>
-
-            <h1 id="project_title">Embercomponents</h1>
-            <h2 id="project_tagline">This repository is a collection of reusable ember components</h2>
-
-            <section id="downloads">
-                <a class="zip_download_link" href="https://github.com/ka4tik/embercomponents/zipball/master">Download this project as a .zip file</a>
-                <a class="tar_download_link" href="https://github.com/ka4tik/embercomponents/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-        <section id="main_content" class="inner">
-            <h3>
-                <a name="ember-components" class="anchor" href="#ember-components"><span class="octicon octicon-link"></span></a>Ember Components</h3>
-
-            <p>This repository is a collection of reusable ember components</p>
-
-            <h3>
-                <a name="components" class="anchor" href="#components"><span class="octicon octicon-link"></span></a>Components</h3>
-
-            <h4>
-                <a name="data-table" class="anchor" href="#data-table"><span class="octicon octicon-link"></span></a>Data-Table</h4>
-
-            <h4>
-                <a name="autocomplete" class="anchor" href="#autocomplete"><span class="octicon octicon-link"></span></a>AutoComplete</h4>
-        </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-        <footer class="inner">
-            <p class="copyright">Embercomponents maintained by <a href="https://github.com/ka4tik">ka4tik</a></p>
-            <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-        </footer>
-    </div>
+    {{outlet}}
 </script>
- <script src="libs/jquery/jquery.js"></script>
- <script src="libs/handlebars/handlebars.js"></script>
+ <script type="text/x-handlebars" id="index">
+     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+     {{outlet}}
+     <!-- HEADER -->
+     <div id="header_wrap" class="outer">
+         <header class="inner">
+             <a id="forkme_banner" href="https://github.com/ka4tik/embercomponents">View on GitHub</a>
+
+             <h1 id="project_title">Embercomponents</h1>
+             <h2 id="project_tagline">This repository is a collection of reusable ember components</h2>
+
+             <section id="downloads">
+                 <a class="zip_download_link" href="https://github.com/ka4tik/embercomponents/zipball/master">Download this project as a .zip file</a>
+                 <a class="tar_download_link" href="https://github.com/ka4tik/embercomponents/tarball/master">Download this project as a tar.gz file</a>
+             </section>
+         </header>
+     </div>
+
+     <!-- MAIN CONTENT -->
+     <div id="main_content_wrap" class="outer">
+         <section id="main_content" class="inner">
+             <h3>
+                 <a name="ember-components" class="anchor" href="#ember-components"><span class="octicon octicon-link"></span></a>Ember Components</h3>
+
+             <p>This repository is a collection of reusable ember components</p>
+
+             <h3>
+                 <a name="components" class="anchor" href="#components"><span class="octicon octicon-link"></span></a>Components</h3>
+             {{#link-to 'datatable'}}
+             <h4>
+               <span class="anchor" class="octicon octicon-link"></span>Data-Table</h4>
+             {{/link-to}}
+             <h4>
+
+                 <a name="autocomplete" class="anchor" href="#autocomplete"><span class="octicon octicon-link"></span></a>AutoComplete</h4>
+         </section>
+     </div>
+
+     <!-- FOOTER  -->
+     <div id="footer_wrap" class="outer">
+         <footer class="inner">
+             <p class="copyright">Embercomponents maintained by <a href="https://github.com/ka4tik">ka4tik</a></p>
+             <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+         </footer>
+     </div>
+ </script>
+
+ <script type="text/x-handlebars" id="datatable">
+     <div {{bind-attr class=cssClass}}></div>
+     <h2 style="text-align:center;">DataTable Demo</h2>
+     {{data-table table=this}}
+ </script>
+<script src="libs/jquery/jquery.js"></script>
+<script src="libs/handlebars/handlebars.js"></script>
 <script src="libs/ember/canary.ember.js"></script>
+<script src="components/autocomplete/js/autocomplete.js"></script>
+<script src="components/datatable/js/datatable.js"></script>
 <script src="javascripts/app.js"></script>
+
+
