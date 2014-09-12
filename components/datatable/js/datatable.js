@@ -1,6 +1,10 @@
 (function () {
     Ember.TEMPLATES['dataTableRow'] = Ember.Handlebars.compile("<td>{{id}}</td><td>{{name}}</td><td>{{age}}</td>");
-    Ember.TEMPLATES['components/data-table'] = Ember.Handlebars.compile("<div  {{bind-attr class=cssClass}}>  </div>  <div class='table-component'>   <div class='topBox'>    <div class='searchBox'>     {{#if table.searchable}}     <span>Search :</span>{{input type='text' value=table.search}}<br/>     {{/if}}    </div>    {{#if table.pagination}} <div class='perPage'>     <span>Rows :</span> {{view Ember.Select content=table.perPageSelector value=table.itemsPerPage}} </div> {{/if}}   {{#if table.filterable}} <div class='filter'>     {{#if table.availableFilters.length}}     <span>Filters :</span> {{view Ember.Select content=table.availableFilters value=table.filterName}} <div style='display:inline-block;'> {{auto-complete localdata=table.autodata searchText=table.filterValue}} </div><button {{action 'addFilter'}} >Apply</button>     {{/if}}     {{#if table.appliedFilters.length}}     <span>Applied Filters</span>     {{#each filter in table.appliedFilters}}  {{filter.name}}:{{filter.value}} <button {{action 'deleteFilter' filter.name filter.value}}> X </button>     {{/each}}     {{/if}}    </div>{{/if}}    </div>   <div class='table'>    <table class='dataTable'>     <thead>     <tr>      {{#each header in table.headers}}      <th>       {{#if table.queryParamsEnabled}}       {{#link-to linkRouter (query-params page=1 sortBy=header.name order=header.order)       target='controller'}}{{header.name}}{{/link-to}}       {{else}}       <a href='' {{action 'getSortedContent' header.name}} >{{header.name}}</a></th>      {{/if}}      </th>      {{/each}}     </tr>     </thead>      <tbody>     {{#each row in table.paginatedContent }} {{view Ember.DataTableRowView contextBinding='row' rowTemplate=table.rowTemplate}} {{/each}}     </tbody>    </table>   </div>  {{#if table.pagination}} <div class='paginator'>     {{#if table.queryParamsEnabled}}    <div class='previousPage'>{{#link-to linkRouter (query-params page=table.prevPage)     target='controller'}}Prev{{/link-to}}    </div>    {{else}}    <div class='previousPage'>{{#if table.prev}}<a href='' {{action getPreviousPage}}>prev</a>     {{else}}prev{{/if}}    </div>    {{/if}}     <div style='text-align: center;width: 50%;float: left;'>     <div class=' pageInfo    '>{{table.currentPage}} of {{table.availablePages}}     </div>    </div>    {{#if table.queryParamsEnabled}}    <div class='nextPage'>{{#link-to linkRouter (query-params page=table.nextPage)     target='controller'}}Next{{/link-to}}    </div>    {{else}}    <div class='nextPage'>{{#if table.next}}<a href=''{{action getNextPage}}>next</a>{{else}}next{{/if}}    </div>    {{/if}}   </div>  </div>{{/if}}");
+    Ember.TEMPLATES['components/data-table'] = Ember.Handlebars.compile("<div {{bind-attr class=cssClass}}>  </div> <div class='table-component'>     <div class='topBox'>         <!--search box-->         {{#if table.searchable}}         <div class='topBox-item'>             <div class='inputBox search'>                 <div class='inputBox-input-div'>                     {{input type='text' value=table.search class='searchBox-input'}}                 </div>                 <div class='searchBox-icon'></div>             </div>         </div>         {{/if}}          {{#if table.pagination}}         <div class='topBox-item'>             <div class='selectBox'>                 {{view Ember.Select content=table.perPageSelector value=table.itemsPerPage class='select'}}             </div>         </div>         {{/if}}          {{#if table.filterable}}         {{#if table.availableFilters.length}}         <div class='topBox-item'>             <div class='selectBox'>                 {{view Ember.Select content=table.availableFilters value=table.filterName class='select'}}             </div>         </div>          <div class='topBox-item'>             <div class='inputBox'>                 <div class='inputBox-input-div'>                     {{auto-complete localdata=table.autodata searchText=table.filterValue class='input'}}                 </div>          </div>         </div>          <a {{action 'addFilter'}}>        <div class='addButton-icon'></div>         </a>         {{/if}}         {{/if}}     </div>       {{#if table.appliedFilters.length}}     <div class='tag-container'>         {{#each filter in table.appliedFilters}}         <div class='tag-box'>             <div class='tag-text'>{{filter.name}}:{{filter.value}}</div>      <a {{action 'deleteFilter' filter.name filter.value}}><div class='tag-remove-icon'></div></a>         </div>         {{/each}}     </div>     {{/if}}      <div class='table'>         <table class='dataTable'>             <thead>             <tr>                 {{#each header in table.headers}}                 <th >                     {{#if table.queryParamsEnabled}} {{#link-to linkRouter (query-params page=1 sortBy=header.name  order=header.order)  target='controller'}}<div {{bind-attr class=header.class}}>{{header.header}}</div>{{/link-to}}                     {{else}} <a {{action 'getSortedContent' header.name}} ><div {{bind-attr class=header.class}}>{{header.header}}</div></a>                     {{/if}}                 </th>                 {{/each}}             </tr>             </thead>             <tbody>             {{#each row in table.paginatedContent }}             {{view Ember.DataTableRowView contextBinding='row' rowTemplate=table.rowTemplate table=table}}             {{/each}}             </tbody>         </table>     </div>      {{#if table.pagination}}     <div class='paginator'> {{#if table.queryParamsEnabled}}         <div class='previousPage'>{{#link-to linkRouter (query-params page=table.prevPage)             target='controller'}}Prev{{/link-to}}         </div>         {{else}}         <div class='previousPage'>{{#if table.prev}}<a href='' {{action getPreviousPage}}>prev</a>             {{else}}prev{{/if}}         </div>         {{/if}}         <div style='text-align: center;width: 50%;float: left;'>             <div class=' pageInfo    '>{{table.currentPage}} of {{table.availablePages}}</div>         </div>         {{#if table.queryParamsEnabled}}         <div class='nextPage'>{{#link-to linkRouter (query-params page=table.nextPage)             target='controller'}}Next{{/link-to}}         </div>         {{else}}         <div class='nextPage'>{{#if table.next}}<a href=''{{action getNextPage}}>next</a>{{else}}next{{/if}}</div>         {{/if}}     </div>     {{/if}} </div>");
+
+    String.prototype.capitalize = function () {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    };
 
     Ember.DataTableRowView = Ember.View.extend({
         tagName:'tr',
@@ -103,33 +107,37 @@
     });
 
     Ember.DataTableMixin = Ember.Mixin.create(Ember.ColumnNamesMixin, Ember.SortableMixin, Ember.PaginationMixin, {
+        headerAlias:null,
         searchable:true,
         filterable:true,
         sortProperties:['id'],
         sortAscending:true,
         pagination:true,
+        hidden:[],
         search:'',
         appliedFilters:[],
-        autodata:function(){
-            var currentFilter=this.get('filterName');
-            if(Ember.isEmpty(currentFilter))
+        propertyAliasMap:Ember.Map.create(),
+        aliasPropertyMap:Ember.Map.create(),
+        autodata:function () {
+            var currentFilter = this.getPropertyFromAlias(this.get('filterName'));
+            if (Ember.isEmpty(currentFilter))
                 return;
-            var autodata=Ember.A();
-            var data=Ember.A();
-            var parent=this;
-            this.get('model').forEach(function(item){
-                data.push(Ember.Object.create(item).get(parent.get('filterName')));
+            var autodata = Ember.A();
+            var data = Ember.A();
+            this.get('model').forEach(function (item) {
+                data.push(Ember.Object.create(item).get(currentFilter));
             });
-            data=data.uniq();
-            data.forEach(function(item){
+            data = data.uniq();
+            data.forEach(function (item) {
                 autodata.push({text:item});
             });
             return autodata;
         }.property('filterName'),
         actions:{
             propSort:function (property) {
-                this.set('sortAscending', (this.sortProperties[0] === property ? !this.sortAscending : true));
-                this.set('sortProperties', [property]);
+                var order = this.get('order');
+                this.set('order', (this.sortProperties[0] === property ? ((!Ember.isEmpty(order) ? ( order == 'asc' ? 'desc' : 'asc') : 'desc')) : 'asc'));
+                this.set('sortBy', property);
                 this.set('currentPage', 1);
             },
             applyFilter:function () {
@@ -153,6 +161,9 @@
                 } else {
                     return;
                 }
+            },
+            deleteFilter:function (param) {
+                this.send('removeFilter', param.name, param.value);
             },
             removeFilter:function (name, value) {
                 this.set('page', 1);
@@ -187,13 +198,60 @@
                 }
             }
         },
+        getPropertyAlias:function (value) {
+            var map = this.get('aliasPropertyMap');
+            if (map.has(value)) {
+                return map.get(value);
+            }
+            this.generateMap(map, false);
+            return map.get(value);
+        },
+        getPropertyFromAlias:function (alias) {
+            var map = this.get('propertyAliasMap');
+            if (map.has(alias)) {
+                return map.get(alias);
+            }
+            this.generateMap(map, true);
+            return map.get(alias);
+        },
+        generateMap:function (map, flip) {
+            var headerAlias = this.get('headerAlias');
+            var properties = this.get('properties');
+            var filters = this.get('filters');
+
+            $.each(properties, function (key, value) {
+                var v1 = flip ? value.replace(/_/g, ' ').capitalize() : value;
+                var v2 = flip ? value : value.replace(/_/g, ' ').capitalize();
+                if (headerAlias.hasOwnProperty(value)) {
+                    map.set(v1, v2);
+                } else {
+                    map.set(v1, v2);
+                }
+            });
+
+            $.each(filters, function (key, value) {
+                var v1 = flip ? value.replace(/_/g, ' ').capitalize() : value;
+                var v2 = flip ? value : value.replace(/_/g, ' ').capitalize();
+                if (!map.has(value)) {
+                    map.set(v1, v2);
+                }
+            });
+        },
         headers:function () {
             var properties = this.get('properties');
             var obj = [];
             var sortBy = this.get('sortBy');
             var order = this.get('order');
+            var parent = this;
+            var hiddenProperties = this.get('hidden');
             $.each(properties, function (key, value) {
-                obj.push({name:value, order:(!Ember.isEmpty(sortBy) ? (sortBy == value ? (!Ember.isEmpty(order) ? (order == 'asc' ? 'desc' : 'asc') : 'asc') : 'asc') : 'asc')});
+                if ($.inArray(value, hiddenProperties)) {
+                    obj.push({
+                        header:parent.getPropertyAlias(value),
+                        name:value,
+                        order:(!Ember.isEmpty(sortBy) ? (sortBy == value ? (!Ember.isEmpty(order) ? (order == 'asc' ? 'desc' : 'asc') : 'asc') : 'asc') : 'asc'),
+                        class:(!Ember.isEmpty(sortBy) ? (sortBy == value ? (!Ember.isEmpty(order) ? (order == 'asc' ? 'sortIcon active-asc' : 'sortIcon active-desc') : 'sortIcon both') : 'sortIcon both') : 'sortIcon both')});
+                }
             });
             return obj;
         }.property('properties', 'sortBy', 'order'),
@@ -202,13 +260,13 @@
             var appliedFilters = this.get('appliedFilters');
             var columns = [];
             var availableFilters = [];
+            var parent = this;
             $.each(appliedFilters, function (key, value) {
-                columns.push(value.name);
+                columns.push(parent.getPropertyFromAlias(value.name));
             });
-
             $.each(filters, function (key, value) {
                 if ($.inArray(value, columns) == -1) {
-                    availableFilters.push(value);
+                    availableFilters.push(parent.getPropertyAlias(value));
                 }
             });
             this.set('filterName', availableFilters[0]);
@@ -241,13 +299,19 @@
             var searchedContent = this.get('searchedContent');
             var filteredContent;
             var appliedFilters = this.get('appliedFilters');
+            var properties = this.get('properties');
+            var parent = this;
             filteredContent = $.grep(searchedContent.toArray(), function (element, index) {
                 var valid = 1;
                 if (typeof element.get != "function") {
                     element = Ember.Object.create(element);
                 }
+
                 $.each(appliedFilters, function (key, value) {
-                    valid = valid && (element.get(value.name).toString() == value.value.toString());
+                    var propertyFromAlias = parent.getPropertyFromAlias(value.name);
+                    if (properties.indexOf(propertyFromAlias) > 0) {
+                        valid = valid && (element.get(propertyFromAlias).toString() == value.value.toString());
+                    }
                 });
                 return (valid > 0);
             });
@@ -287,15 +351,7 @@
 
     });
 
-    var DataTableComponent = Ember.Component.extend({
-        init:function () {
-            this._super();
-            this.set('nextPage', 'nextPage');
-            this.set('previousPage', 'previousPage');
-            this.set('applyFilter', 'applyFilter');
-            this.set('removeFilter', 'removeFilter');
-            this.set('propSort', 'propSort');
-        },
+    var DataTableComponent = Ember.Component.extend(Ember.TargetActionSupport, {
         linkRouter:function () {
             //ref http://stackoverflow.com/questions/15019212/ember-app-router-router-currentstate-undefined/
             var router = App.__container__.lookup("router:main"); //lookup the router
@@ -318,28 +374,50 @@
             },
             getSortedContent:function (prop) {
                 this.send('loading');
-                this.sendAction('propSort', prop);
+                var parent = this;
+                this.triggerAction({
+                    action:'propSort',
+                    target:parent.get('table'),
+                    actionContext:prop
+                });
                 this.send('ready');
 
             },
             getNextPage:function () {
                 this.send('loading');
-                this.sendAction('nextPage');
+                var parent = this;
+                this.triggerAction({
+                    action:'nextPage',
+                    target:parent.get('table')
+                });
                 this.send('ready');
             },
             getPreviousPage:function () {
                 this.send('loading');
-                this.sendAction('previousPage');
+                var parent = this;
+                this.triggerAction({
+                    action:'previousPage',
+                    target:parent.get('table')
+                });
                 this.send('ready');
             },
             addFilter:function () {
                 this.send('loading');
-                this.sendAction('applyFilter');
+                var parent = this;
+                this.triggerAction({
+                    action:'applyFilter',
+                    target:parent.get('table')
+                });
                 this.send('ready');
             },
             deleteFilter:function (name, value) {
                 this.send('loading');
-                this.sendAction('removeFilter', name, value);
+                var parent = this;
+                this.triggerAction({
+                    action:'deleteFilter',
+                    target:parent.get('table'),
+                    actionContext:{name:name, value:value}
+                });
                 this.send('ready');
             }
         }

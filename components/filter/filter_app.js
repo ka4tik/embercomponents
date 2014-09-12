@@ -31,10 +31,17 @@ App.ApplicationRoute = Ember.Route.extend({
     }
 });
 
-App.ApplicationController=Ember.ArrayController.extend(Ember.DataTableMixin,{
-    queryParams:['sortBy','order','search','page','itemsPerPage','filterBy'],
-    headerAlias:Ember.Object.create({age:'Age',name:"User Name"}),
-    queryParamsEnabled:true
-//    pagination:false,
-//    itemsPerPage:100000
+App.ApplicationController=Ember.ObjectController.extend({
+    appliedFilters:Ember.Map.create(),
+    searchResults:[],
+    filters:Ember.A([{name:'age',type:'number',alias:'Age',url:"/tada/tada/",placeholder:"Enter Your Age"},
+                     {name:'name',type:'string',alias:'Name',data:[{text:'Abhijeet'},{text:'Abhijeet Pandey'},{text:'Anup'}, {text:'Suraj'}]},
+                     {name:'rating',type:'range',alias:'Rating', placeholder:'low::high', isAutoCompleteOn:false}]),
+    appliedFiltersObserver:function(){
+        console.log(this.get('appliedFilters'));
+    }.observes('appliedFilters.length'),
+    searchResultsObserver:function(){
+        console.log(this.get('searchResults'));
+    }.observes('searchResults.length'),
+    baseUrl:"/data/get/"
 });

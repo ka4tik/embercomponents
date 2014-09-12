@@ -1,0 +1,160 @@
+.flush--top {
+    margin-top: 0;
+    overflow: scroll;
+}
+
+.filter{
+    width: 45%;
+    margin: auto;
+}
+
+body {
+    font-size: 13px;
+    line-height: 22px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-bottom: 100px;
+}
+
+.topBox {
+    /*margin: 0 auto 10px;*/
+    height: auto;
+    /*border: #cececf solid 1px;*/
+    background: #fff;
+    overflow:auto;
+    margin: 10px 0 10px 0;
+}
+
+.topBox-item {
+    float: left;
+    width: auto;
+    height: auto;
+    margin: 0 10px 0 0;
+}
+
+.inputBox {
+    height: 35px;
+    border: #cececf solid 1px;
+    background: #fafafa;
+}
+
+.inputBox-input-div {
+    float: left;
+    height: 33px;
+}
+
+.searchBox-input {
+    border: none;
+    font-weight: normal;
+    font-size: 13px !important;
+    color: #666 !important;
+    background: none;
+    height: 25px;
+    padding: 5px 5px 0 10px;
+    outline: none;
+    transition: all 0.25s ease-in-out;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+}
+
+.searchBox-icon {
+    float: right;
+    width: 20px;
+    height: 26px;
+    margin: 7px 7px 0;
+    background: url(../../../images/search-generic-icon.png) no-repeat;
+}
+
+.selectBox {
+    float: left;
+    width: 75px;
+    height: 35px;
+    border: #cececf solid 1px;
+    background: #fafafa;
+}
+
+.select {
+    border: none;
+    font-weight: normal;
+    font-size: 13px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 70px;
+    height: 30px;
+    padding: 0 10px;
+    background: none
+}
+
+.input>div>input {
+    border: none;
+    font-weight: normal;
+    font-size: 13px !important;
+    color: #666 !important;
+    background: none;
+    height: 25px;
+    padding: 5px 5px 0 10px;
+    outline: none;
+    transition: all 0.25s ease-in-out;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+}
+
+.addButton-icon {
+    float: left;
+    width: 25px;
+    height: 35px;
+    background: url(../../../images/add-generic-icon.png) no-repeat 0px;
+    margin-right: 10px;
+    border: #cececf solid 1px;
+}
+
+.tag-container {
+    margin: 0 auto 8px;
+    overflow: auto;
+    -webkit-animation: fadeOut 500ms;
+    -moz-animation: fadeOut 500ms;
+    animation: fadeOut 500ms;
+}
+
+.tag-box {
+    float: left;
+    height: 26px;
+    margin: 0 10px 6px 0;
+    padding: 0;
+    font-size: 12px;
+    color: #999;
+}
+
+.tag-text {
+    height: 24px;
+    float: left;
+    padding: 2px 5px 0;
+}
+
+.tag-remove-icon {
+    width: 24px;
+    height: 24px;
+    float: left;
+    padding: 1px 0 0;
+    background: url(../../../images/delete-small.png) no-repeat;
+}
+
+.ns-button {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 1px 15px;
+    font-size: 12px;
+    font-weight: bold;
+    height: 37px;
+    width: 100px;
+    color: #eee;
+    background-color: #333;
+    outline: none ;
+}
+
+.ns-button:hover{
+    background: #666;
+}
